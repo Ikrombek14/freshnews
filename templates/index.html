@@ -2,6 +2,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block title %}
     Main Page
 {% endblock %}
@@ -39,14 +40,16 @@
                         <!-- Trending Top -->
                          <div class="trending-top mb-30">
                             <div class="trend-top-img">
-                                {% if latest_post.image %}
-                                    <img src="{{ latest_post.image.url }}" alt="So'nggi xabarlar">
+                                {% if latest_post_with_image.image %}
+                                    <img src="{{ latest_post_with_image.image.url }}" alt="So'nggi xabarlar">
+                                
+                    
                                 {% endif %}
 
                                 <div class="trend-top-cap">
-                                    <span>{{ latest_post.category.name }}</span>
+                                    <span>{{ latest_post_with_image.category.name }}</span>
                                     <h2>
-                                        <a href="#">{{ latest_post.title }}</a>
+                                        <a href="{% url 'post_detail' latest_post_with_image.slug %}">{{ latest_post_with_image.title }}</a>
                                     </h2>
                                 </div>
                             </div>
@@ -55,51 +58,28 @@
                         <!-- Trending Bottom -->
                         <div class="trending-bottom">
                             <div class="row">
-                                <div class="col-lg-4">
-                                <div class="single-bottom mb-35">
-                                    <div class="trend-bottom-img mb-30">
-                                        {% if post_jamiyat.image %}
-
-                                            <img src="{{ post_jamiyat.image.url }}" alt="{{post_jamiyat.title}}" width="240" height="160">
-                                        {% endif %}
-                                    </div>
-
-                                    <div class="trend-bottom-cap">
-                                        <span class="color1">{{post_jamiyat.category.name}}</span>
-                                        <h4><a href="#">{{post_jamiyat.title}}</a></h4>
-                                    </div>
-                                </div>
-                                </div>
+                            
+                                {% for all_post in all_posts  %}
                                 <div class="col-lg-4">
                                     <div class="single-bottom mb-35">
                                         <div class="trend-bottom-img mb-30">
-                                            {% if post_sport.image %}
-                                                <img src="{{ post_sport.image.url }}" alt="{{ post_sport.title }}" width="240" height="160">
+                                            {% if all_post.image %}
+                                                <img src="{{ all_post.image.url }}" alt="{{ all_post.title }}" width="240" height="160">
                                             {% endif %}
                                         </div>
-
+                        
                                         <div class="trend-bottom-cap">
-                                            <span class="color2">{{post_sport.category.name}}</span>
-                                            <h4><a href="#">{{post_sport.title}}</a></h4>
+                                            <span class="color1">{{ all_post.category.name }}</span>
+                                            <h4><a href="{% url 'post_detail' all_post.slug %}">{{ all_post.title }}</a></h4>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            {% if post_jahon.image%}
-                                                <img src="{{post_jahon.image.url }}" alt="{{post_jahon.title}}" width="240" height="160">
-                                            {% endif %}
-                                        </div>
-
-                                        <div class="trend-bottom-cap">
-                                            <span class="color3">{{post_jahon.category.name}}</span>
-                                            <h4><a href="#"> {{post_jahon.title }}</a></h4>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% endfor %}
+                           
                             </div>
                         </div>
+                        
+                        
                     </div>
                     <!-- Riht content -->
                     <div class="col-lg-4">
@@ -113,9 +93,7 @@
                             <div class="trand-right-cap">
                                 <span class="color3">{{latest_jamiyat_post.category.name}}</span>
                                 <h4>
-                                    <a href="#">
-                                        {{ latest_jamiyat_post.title }}
-                                    </a>
+                                    <a href="{% url 'post_detail' latest_jamiyat_post.slug %}">{{ latest_jamiyat_post.title }}</a>
                                 </h4>
                             </div>
                         </div>
@@ -130,9 +108,8 @@
                             <div class="trand-right-cap">
                                 <span class="color1">{{ latest_sport_post.category.name }}</span>
                                 <h4>
-                                    <a href="#">
-                                        {{ latest_sport_post.title }}
-                                    </a>
+                                    <a href="{% url 'post_detail' latest_sport_post.slug %}">{{ latest_sport_post.title }}</a>
+                                    
                                 </h4>
                             </div>
 
@@ -146,7 +123,7 @@
 
                             <div class="trand-right-cap">
                                 <span class="color2">{{ latest_jahon_post.category.name}}</span>
-                                <h4><a href="#">{{ latest_jahon_post.title }}</a></h4>
+                                <a href="{% url 'post_detail' latest_jahon_post.slug %}">{{ latest_jahon_post.title }}</a>>
                             </div>
                         </div> 
                         <div class="trand-right-single d-flex">
@@ -159,7 +136,7 @@
 
                             <div class="trand-right-cap">
                                 <span class="color4">{{latest_fantexnika_post.category.name}}</span>
-                                <h4><a href="#">{{latest_fantexnika_post.title}}</a></h4>
+                                <h4><a href="{% url 'post_detail' latest_fantexnika_post.slug %}">{{latest_fantexnika_post.title}}</a></h4>
                             </div>
                         </div>
                         <div class="trand-right-single d-flex">
@@ -171,7 +148,7 @@
 
                             <div class="trand-right-cap">
                                 <span class="color1">{{latest_madaniyat_post.category.name}}</span>
-                                <h4><a href="#">{{latest_madaniyat_post.title}}</a></h4>
+                                <h4><a href="{% url 'post_detail' latest_madaniyat_post.slug %}">{{latest_madaniyat_post.title}}</a></h4>
                             </div>
                         </div>
 
@@ -217,6 +194,8 @@
                     </div>
                 </div>
 
+                
+
            </div>
         </div>
     </div>           
@@ -232,98 +211,49 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-tittle mb-30">
-                            <h3>Weekly Top News</h3>
+                            <h3>Haftalik Top Xabarlar</h3>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="weekly2-news-active dot-style d-flex dot-style">
-                            <div class="weekly2-single">
-                               <div class="weekly2-img">
-                                    <img src="{% static 'assets/img/news/weekly2News1.jpg' %}" alt="">
-                                </div>
-
-                                <div class="weekly2-caption">
-                                    <span class="color1">Corporate</span>
-                                    <p>25 Jan 2020</p>
-                                    <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
-                                </div>
-                            </div> 
+                            {% for weekly_top_post in weekly_top_posts %}
                             <div class="weekly2-single">
                                 <div class="weekly2-img">
-                                    <img src="{% static 'assets/img/news/weekly2News2.jpg' %}" alt="">
+                                    {% if weekly_top_post.image %}
+                                        <img src="{{ weekly_top_post.image.url }}" alt="{{ weekly_top_post.title }}">
+                        
+                                    {% endif %}
                                 </div>
-
+                
                                 <div class="weekly2-caption">
-                                    <span class="color1">Event night</span>
-                                    <p>25 Jan 2020</p>
-                                    <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
-                                </div>
-                            </div> 
-                            <div class="weekly2-single">
-                                <div class="weekly2-img">
-                                    <img src="{% static 'assets/img/news/weekly2News3.jpg' %}" alt="">
-                                </div>
-
-                                <div class="weekly2-caption">
-                                    <span class="color1">Corporate</span>
-                                    <p>25 Jan 2020</p>
-                                    <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
+                                    <span class="color1">{{ weekly_top_post.category.name }}</span>
+                                    <p>{{ weekly_top_post.created_ad|date:"d M Y" }}</p>
+                                    <h4><a href="#">{{ weekly_top_post.title }}</a></h4>
                                 </div>
                             </div>
-                             <div class="weekly2-single">
-                                <div class="weekly2-img">
-                                    <img src="{% static 'assets/img/news/weekly2News4.jpg' %}" alt="">
-                                </div>
-
-                                <div class="weekly2-caption">
-                                    <span class="color1">Event time</span>
-                                    <p>25 Jan 2020</p>
-                                    <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
-                                </div>
-                            </div> 
-                             <div class="weekly2-single">
-                            <div class="weekly2-img">
-                                <img src="{% static 'assets/img/news/weekly2News4.jpg' %}" alt="">
-                            </div>
-
-                                <div class="weekly2-caption">
-                                    <span class="color1">Corporate</span>
-                                    <p>25 Jan 2020</p>
-                                    <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
-                                </div>
-                            </div> 
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>           
     <!-- End Weekly-News -->
     <!-- Start Youtube -->
+
     <div class="youtube-area video-padding">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="video-items-active">
+                        {% for video_post in video_posts %}
                         <div class="video-items text-center">
-                            <iframe src="https://www.youtube.com/embed/CicQIuG8hBo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe src="{{ video_post.embed_url }}" frameborder="0" allowfullscreen></iframe>
                         </div>
-                        <div class="video-items text-center">
-                            <iframe  src="https://www.youtube.com/embed/rIz00N40bag" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                        <div class="video-items text-center">
-                            <iframe src="https://www.youtube.com/embed/CONfhrASy44" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-                        </div>
-                        <div class="video-items text-center">
-                            <iframe src="https://www.youtube.com/embed/lq6fL2ROWf8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                         
-                        </div>
-                        <div class="video-items text-center">
-                            <iframe src="https://www.youtube.com/embed/0VxlQlacWV4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -331,53 +261,39 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="video-caption">
+                            {% if video_posts %}
                             <div class="top-caption">
-                                <span class="color1">Politics</span>
+                                <span class="color1">{{ video_posts.first.category.name }}</span>
                             </div>
                             <div class="bottom-caption">
-                                <h2>Welcome To The Best Model Winner Contest At Look of the year</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum dolor sit lorem ipsum dolor sit.</p>
+                                <h2>{{ video_posts.first.title }}</h2>
+                                <p>{{ video_posts.first.content }}</p>
                             </div>
+                            {% else %}
+                            <p>No videos available.</p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="testmonial-nav text-center">
+                            {% for video_post in video_posts %}
                             <div class="single-video">
-                                <iframe  src="https://www.youtube.com/embed/CicQIuG8hBo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <iframe src="{{ video_post.embed_url }}" frameborder="0" allowfullscreen></iframe>
                                 <div class="video-intro">
-                                    <h4>Welcotme To The Best Model Winner Contest</h4>
+                                    <h4>{{ video_post.title }}</h4>
                                 </div>
                             </div>
-                            <div class="single-video">
-                                <iframe  src="https://www.youtube.com/embed/rIz00N40bag" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                <div class="video-intro">
-                                    <h4>Welcotme To The Best Model Winner Contest</h4>
-                                </div>
-                            </div>
-                            <div class="single-video">
-                                <iframe src="https://www.youtube.com/embed/CONfhrASy44" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                <div class="video-intro">
-                                    <h4>Welcotme To The Best Model Winner Contest</h4>
-                                </div>
-                            </div>
-                            <div class="single-video">
-                                <iframe src="https://www.youtube.com/embed/lq6fL2ROWf8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                <div class="video-intro">
-                                    <h4>Welcotme To The Best Model Winner Contest</h4>
-                                </div>
-                            </div>
-                            <div class="single-video">
-                                <iframe src="https://www.youtube.com/embed/0VxlQlacWV4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                <div class="video-intro">
-                                    <h4>Welcotme To The Best Model Winner Contest</h4>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
+    
+    
+    
+     
     <!-- End Start youtube -->
     <!--  Recent Articles start -->
     <div class="recent-articles">
@@ -387,75 +303,46 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-tittle mb-30">
-                            <h3>Recent Articles</h3>
+                            <h3>Sport</h3>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="recent-active dot-style d-flex dot-style">
+                            {% for sport_post in sport_posts %}
                             <div class="single-recent mb-100">
                                 <div class="what-img">
-                                    <img src="{% static 'assets/img/news/recent1.jpg' %}" alt="">
+                                    {% if sport_post.image %}
+                                        <img src="{{ sport_post.image.url }}" alt="{{ sport_post.title }}">
+                                    {% else %}
+                                        <img src="{% static 'assets/img/news/default.jpg' %}" alt="No image available">
+                                    {% endif %}
                                 </div>
-
                                 <div class="what-cap">
-                                    <span class="color1">Night party</span>
-                                    <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
+                                    <span class="color1">{{ sport_post.category.name }}</span>
+                                    <h4><a href="#">{{ sport_post.title }}</a></h4>
                                 </div>
                             </div>
-                            <div class="single-recent mb-100">
-                            <div class="what-img">
-                                <img src="{% static 'assets/img/news/recent2.jpg' %}" alt="">
-                            </div>
-
-                                <div class="what-cap">
-                                    <span class="color1">Night party</span>
-                                    <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
-                                </div>
-                            </div>
-                            <div class="single-recent mb-100">
-                                <div class="what-img">
-                                    <img src="{% static 'assets/img/news/recent3.jpg' %}" alt="">
-                                </div>
-
-                                <div class="what-cap">
-                                    <span class="color1">Night party</span>
-                                    <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
-                                </div>
-                            </div>
-                            <div class="single-recent mb-100">
-                            <div class="what-img">
-                                <img src="{% static 'assets/img/news/recent2.jpg' %}" alt="">
-                            </div>
-
-                                <div class="what-cap">
-                                    <span class="color1">Night party</span>
-                                    <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
            </div>
         </div>
-    </div>           
+    </div>
+    
+              
     <!--Recent Articles End -->
     <!--Start pagination -->
-    <div class="pagination-area pb-45 text-center">
+   << <div class="pagination-area pb-45 text-center">
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
                     <div class="single-wrap d-flex justify-content-center">
                         <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-start">
-                              <li class="page-item"><a class="page-link" href="#"><span class="flaticon-arrow roted"></span></a></li>
-                                <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03</a></li>
-                              <li class="page-item"><a class="page-link" href="#"><span class="flaticon-arrow right-arrow"></span></a></li>
-                            </ul>
-                          </nav>
+                            
+                        </nav>
                     </div>
                 </div>
             </div>

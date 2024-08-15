@@ -1,6 +1,8 @@
 from django.db import models
-from django.utils.safestring import mark_safe
+
+from django.urls import reverse
 # Create your models here.
+
 
 
 class Categories(models.Model):
@@ -10,31 +12,53 @@ class Categories(models.Model):
         return self.name
 
 
+
+
 class Post(models.Model):
     title = models.CharField(max_length=250)
     content = models.TextField()
     created_ad = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField(unique=True, max_length=255, null=False)
     category = models.ForeignKey(Categories, on_delete=models.DO_NOTHING)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     video = models.FileField(upload_to='videos/', blank=True, null=True)
-    youtube_url = models.URLField(blank=True, null=True)
 
-    def get_youtube_embed_url(self):
-        if self.youtube_url:
-            video_id = self.youtube_url.split('v=')[-1]
-            return f"https://www.youtube.com/embed/{video_id}"
-        return None
 
-    def youtube_video(self):
-        embed_url = self.get_youtube_embed_url()
-        if embed_url:
-            return mark_safe(
-                f'<iframe width="560" height="315" src="{embed_url}" frameborder="0" allowfullscreen></iframe>')
-        return None
-
+    
+    
+    def get_absolute_url(self):
+        return reverse('post_detail',
+                       args=[self.slug])
 
     def __str__(self):
         return self.title
+
+import re 
+class YoutubeVideo(models.Model):
+    title = models.CharField(max_length=250) 
+    category = models.ForeignKey(Categories, on_delete=models.DO_NOTHING)
+    content = models.TextField()
+    youtube_url = models.URLField(blank=True, null=True)
+    created_ad = models.DateTimeField(auto_now_add=True)
+    slug = slug = models.SlugField(unique=True, max_length=255, null=False)
+    
+    def __str__(self):
+        return self.title
+    
+    
+
+    @property
+    def embed_url(self):
+        if self.youtube_url:
+            # Regular expression to extract video ID from various YouTube URL formats
+            match = re.search(
+                r'(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:embed\/|v\/|watch\?v=)|youtu\.be\/)([^"&?\/\s]{11})',
+                self.youtube_url
+            )
+            if match:
+                video_id = match.group(1)
+                return f'https://www.youtube.com/embed/{video_id}'
+        return ''
 
 
 class Advertisement(models.Model):
@@ -46,6 +70,7 @@ class Advertisement(models.Model):
 
     def __str__(self):
         return self.title
+
 
 
 

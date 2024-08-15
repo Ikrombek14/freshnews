@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advertisement List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+        }
+
+        .btn-primary, .btn-secondary {
+            margin-bottom: 15px;
+        }
+
+        .btn-danger {
+            margin-left: 10px;
+        }
+
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        @media (max-width: 576px) {
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn-group .btn {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Advertisement List</h1>
+        <a href="{% url 'advertisement_create' %}" class="btn btn-primary">Create New Advertisement</a>
+        <ul class="list-group">
+            {% for ad in advertisements %}
+                <li class="list-group-item">
+                    <a href="{% url 'advertisement_detail' ad.pk %}">{{ ad.title }}</a>
+                    <div class="btn-group">
+                        <a href="{% url 'advertisement_update' ad.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'advertisement_delete' ad.pk %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Delete</a>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No advertisements available.</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'home' %}" class="btn btn-secondary mt-4">Back to Home</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

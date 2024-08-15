@@ -15,11 +15,27 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.shortcuts import render
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("news.urls"))
+    path("", include("news.urls")),
+    path('dashboard/', include("adminPanel.urls")),
+    path('auth/', include("Authenticatet.urls")),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+def custom_page_not_found_view(request, exception):
+    return render(request, '404.html', status=404)
+
+
+def custom_server_error_view(request):
+    return render(request, '500.html', status=500)
+
+
+handler404 = custom_page_not_found_view
+handler500 = custom_server_error_view
