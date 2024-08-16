@@ -79,14 +79,14 @@
                         <div class="col-xl-10 col-lg-10 col-md-12 header-flex">
                             <!-- sticky -->
                                 <div class="sticky-logo">
-                                    <a href="index.html"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
+                                    <a href="{% url 'main' %}"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
                                 </div>
                             <!-- Main-menu -->
                             <div class="main-menu d-none d-md-block">
                                 <nav>                  
                                     <ul id="navigation">
                                         {% for category in categories %}    
-                                        <li><a href="">{{category.name}}</a></li>
+                                        <li><a href="{% url 'post_by_categories' category.name %}">{{category.name}}</a></li>
                                         {% endfor %}
                                         
                                         
@@ -173,19 +173,8 @@
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
                     <div class="single-footer-caption mb-50 mt-60">
-                        <div class="footer-tittle">
-                            <h4>Instagram Feed</h4>
-                        </div>
-                        <div class="instagram-gellay">
-                            <ul class="insta-feed">
-                                <li><a href="#"><img src="{% static 'assets/img/post/instra1.jpg' %}" alt=""></a></li>
-                                <li><a href="#"><img src="{% static 'assets/img/post/instra2.jpg' %}" alt=""></a></li>
-                                <li><a href="#"><img src="{% static 'assets/img/post/instra3.jpg' %}" alt=""></a></li>
-                                <li><a href="#"><img src="{% static 'assets/img/post/instra4.jpg' %}" alt=""></a></li>
-                                <li><a href="#"><img src="{% static 'assets/img/post/instra5.jpg' %}" alt=""></a></li>
-                                <li><a href="#"><img src="{% static 'assets/img/post/instra6.jpg' %}" alt=""></a></li>
-                            </ul>
-                        </div>
+                       
+
                     </div>
                 </div>
             </div>
