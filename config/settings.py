@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'news',
     'adminPanel',
     'Authenticatet',
-    'whitenoise.runserver_nostatic'
+    'whitenoise.runserver_nostatic',
 
 ]
 
@@ -53,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'config.urls'
 
@@ -131,7 +133,7 @@ STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR.joinpath('media')
