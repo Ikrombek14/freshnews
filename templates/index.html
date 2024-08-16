@@ -1,55 +1,54 @@
-
 {% extends 'base.html' %}
 {% load static %}
-
 
 {% block title %}
     Main Page
 {% endblock %}
 
 {% block content %}
-
-    <main>
+<main>
     <!-- Trending Area Start -->
     <div class="trending-area fix">
         <div class="container">
             <div class="trending-main">
-<!--                &lt;!&ndash; Trending Tittle &ndash;&gt; eng so'nggi yangilik-->
                 <div class="row">
                     <div class="col-lg-12">
+                        
                         <div class="trending-tittle">
                             <strong>Qaynoq yangiliklar</strong>
-                            <!-- <p>Rem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
                             <div class="trending-animated">
                                 <ul id="js-news" class="js-hidden">
                                     {% for post in latest_posts %}
-                                    {% if post %}
-                                        <li class="news-item">{{ post.title }}</li>
-                                    {% endif %}
+                                        {% if post %}
+                                            <li class="news-item">{{ post.title }}</li>
+                                        {% else %}
+                                            <li>Hozircha postlar yo'q</li>
+                                        {% endif %}
+                                    {% empty %}
+                                        <li>Hozircha postlar yo'q</li>
                                     {% endfor %}
-
-
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Latest Post with Image -->
                 <div class="row">
                     <div class="col-lg-8">
-                        <!-- Trending Top -->
-                         <div class="trending-top mb-30">
+                        <div class="trending-top mb-30">
                             <div class="trend-top-img">
                                 {% if latest_post_with_image.image %}
                                     <img src="{{ latest_post_with_image.image.url }}" alt="So'nggi xabarlar">
-                                
-                    
+                                {% else %}
+                                    <p>Hozircha postlar yo'q</p>
                                 {% endif %}
-
                                 <div class="trend-top-cap">
                                     <span>{{ latest_post_with_image.category.name }}</span>
                                     <h2>
-                                        <a href="{% url 'post_detail' latest_post_with_image.slug %}">{{ latest_post_with_image.title }}</a>
+                                        <a href="{% url 'post_detail' latest_post_with_image.slug %}">
+                                            {{ latest_post_with_image.title }}
+                                        </a>
                                     </h2>
                                 </div>
                             </div>
@@ -58,112 +57,101 @@
                         <!-- Trending Bottom -->
                         <div class="trending-bottom">
                             <div class="row">
-                            
-                                {% for all_post in all_posts  %}
-                                <div class="col-lg-4">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            {% if all_post.image %}
-                                                <img src="{{ all_post.image.url }}" alt="{{ all_post.title }}" width="240" height="160">
-                                            {% endif %}
-                                        </div>
-                        
-                                        <div class="trend-bottom-cap">
-                                            <span class="color1">{{ all_post.category.name }}</span>
-                                            <h4><a href="{% url 'post_detail' all_post.slug %}">{{ all_post.title }}</a></h4>
+                                {% for all_post in all_posts %}
+                                    <div class="col-lg-4">
+                                        <div class="single-bottom mb-35">
+                                            <div class="trend-bottom-img mb-30">
+                                                {% if all_post.image %}
+                                                    <img src="{{ all_post.image.url }}" alt="{{ all_post.title }}" width="240" height="160">
+                                                {% else %}
+                                                    <p>Hozircha rasm mavjud emas</p>
+                                                {% endif %}
+                                            </div>
+                                            <div class="trend-bottom-cap">
+                                                <span class="color1">{{ all_post.category.name }}</span>
+                                                <h4><a href="{% url 'post_detail' all_post.slug %}">{{ all_post.title }}</a></h4>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                {% empty %}
+                                    <p>Hozircha postlar yo'q</p>
                                 {% endfor %}
-                           
                             </div>
                         </div>
-                        
-                        
                     </div>
-                    <!-- Riht content -->
+
+                    <!-- Right Sidebar Content -->
                     <div class="col-lg-4">
+                        <!-- Latest Jamiyat Post -->
                         <div class="trand-right-single d-flex">
                             <div class="trand-right-img">
                                 {% if latest_jamiyat_post.image %}
                                     <img src="{{ latest_jamiyat_post.image.url }}" alt="{{ latest_jamiyat_post.title }}" width="120" height="100">
+                                {% else %}
+                                    <p>Hozircha postlar yo'q</p>
                                 {% endif %}
                             </div>
-
                             <div class="trand-right-cap">
                                 <span class="color3">{{latest_jamiyat_post.category.name}}</span>
-                                <h4>
-                                    <a href="{% url 'post_detail' latest_jamiyat_post.slug %}">{{ latest_jamiyat_post.title }}</a>
-                                </h4>
+                                <h4><a href="{% url 'post_detail' latest_jamiyat_post.slug %}">{{ latest_jamiyat_post.title }}</a></h4>
                             </div>
                         </div>
 
-
+                        <!-- Latest Sport Post -->
                         <div class="trand-right-single d-flex">
-                             <div class="trand-right-img">
+                            <div class="trand-right-img">
                                 {% if latest_sport_post.image %}
-                                     <img src="{{ latest_sport_post.image.url }}" alt="{{ latest_sport_post.title }}" width="120" height="100">
+                                    <img src="{{ latest_sport_post.image.url }}" alt="{{ latest_sport_post.title }}" width="120" height="100">
+                                {% else %}
+                                    <p>Hozircha postlar yo'q</p>
                                 {% endif %}
                             </div>
                             <div class="trand-right-cap">
                                 <span class="color1">{{ latest_sport_post.category.name }}</span>
-                                <h4>
-                                    <a href="{% url 'post_detail' latest_sport_post.slug %}">{{ latest_sport_post.title }}</a>
-                                    
-                                </h4>
+                                <h4><a href="{% url 'post_detail' latest_sport_post.slug %}">{{ latest_sport_post.title }}</a></h4>
                             </div>
-
                         </div>
+
+                        <!-- Other Categories... -->
                         <div class="trand-right-single d-flex">
                             <div class="trand-right-img">
                                 {% if latest_jahon_post.image %}
                                     <img src="{{ latest_jahon_post.image.url }}" alt="{{ latest_jahon_post.title }}" width="120" height="100">
+                                {% else %}
+                                    <p>Hozircha postlar yo'q</p>
                                 {% endif %}
                             </div>
-
                             <div class="trand-right-cap">
-                                <span class="color2">{{ latest_jahon_post.category.name}}</span>
-                                <a href="{% url 'post_detail' latest_jahon_post.slug %}">{{ latest_jahon_post.title }}</a>>
+                                <span class="color2">{{ latest_jahon_post.category.name }}</span>
+                                <h4><a href="{% url 'post_detail' latest_jahon_post.slug %}">{{ latest_jahon_post.title }}</a></h4>
                             </div>
-                        </div> 
+                        </div>
+
+                        <!-- Latest Fantexnika Post -->
                         <div class="trand-right-single d-flex">
                             <div class="trand-right-img">
                                 {% if latest_fantexnika_post.image %}
-                                <img src="{{ latest_fantexnika_post.image.url }}" alt="{{ latest_fantexnika_post.titile }}" width="120" height="100">
+                                    <img src="{{ latest_fantexnika_post.image.url }}" alt="{{ latest_fantexnika_post.title }}" width="120" height="100">
+                                {% else %}
+                                    <p>Hozircha postlar yo'q</p>
                                 {% endif %}
                             </div>
-
-
                             <div class="trand-right-cap">
                                 <span class="color4">{{latest_fantexnika_post.category.name}}</span>
                                 <h4><a href="{% url 'post_detail' latest_fantexnika_post.slug %}">{{latest_fantexnika_post.title}}</a></h4>
                             </div>
                         </div>
-                        <div class="trand-right-single d-flex">
-                            <div class="trand-right-img">
-                                {% if latest_madaniyat_post.image %}
-                                    <img src="{{ latest_madaniyat_post.image.url }}" alt="{{ latest_madaniyat_post.title }}" width="120" height="100">
-                                {% endif %}
-                            </div>
-
-                            <div class="trand-right-cap">
-                                <span class="color1">{{latest_madaniyat_post.category.name}}</span>
-                                <h4><a href="{% url 'post_detail' latest_madaniyat_post.slug %}">{{latest_madaniyat_post.title}}</a></h4>
-                            </div>
-                        </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Trending Area End -->
-    <!--   Weekly-News start -->
+
+    <!-- Weekly-News -->
     <div class="weekly-news-area pt-50">
         <div class="container">
            <div class="weekly-wrapper">
-                <!-- section Tittle -->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-tittle mb-30">
@@ -175,155 +163,21 @@
                     <div class="col-12">
                         <div class="weekly-news-active dot-style d-flex dot-style">
                             {% for jamiyat_post in jamiyat_posts %}
-                            <div class="weekly-single {% if forloop.first %}active{% endif %}">
-                                <div class="weekly-img">
-                                    {% if jamiyat_post.image %}
-                                        <img src="{{ jamiyat_post.image.url }}" alt="{{ jamiyat_post.title }}" width="360" height="420">
-                                    {% endif %}
+                                <div class="weekly-single {% if forloop.first %}active{% endif %}">
+                                    <div class="weekly-img">
+                                        {% if jamiyat_post.image %}
+                                            <img src="{{ jamiyat_post.image.url }}" alt="{{ jamiyat_post.title }}" width="360" height="420">
+                                        {% else %}
+                                            <p>Hozircha postlar yo'q</p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="weekly-caption">
+                                        <span class="color1">{{ jamiyat_post.category.name }}</span>
+                                        <h4><a href="#">{{ jamiyat_post.title }}</a></h4>
+                                    </div>
                                 </div>
-
-                                <div class="weekly-caption">
-                                    <span class="color1">{{ jamiyat_post.category.name }}</span>
-                                    <h4>
-                                        <a href="#">{{ jamiyat_post.title }}</a>
-                                    </h4>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-
-                
-
-           </div>
-        </div>
-    </div>           
-    <!-- End Weekly-News -->
-   <!-- Whats New Start -->
-
-    <!-- Whats New End -->
-    <!--   Weekly2-News start -->
-    <div class="weekly2-news-area  weekly2-pading gray-bg">
-        <div class="container">
-            <div class="weekly2-wrapper">
-                <!-- section Tittle -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-tittle mb-30">
-                            <h3>Haftalik Top Xabarlar</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="weekly2-news-active dot-style d-flex dot-style">
-                            {% for weekly_top_post in weekly_top_posts %}
-                            <div class="weekly2-single">
-                                <div class="weekly2-img">
-                                    {% if weekly_top_post.image %}
-                                        <img src="{{ weekly_top_post.image.url }}" alt="{{ weekly_top_post.title }}">
-                        
-                                    {% endif %}
-                                </div>
-                
-                                <div class="weekly2-caption">
-                                    <span class="color1">{{ weekly_top_post.category.name }}</span>
-                                    <p>{{ weekly_top_post.created_ad|date:"d M Y" }}</p>
-                                    <h4><a href="#">{{ weekly_top_post.title }}</a></h4>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </div>           
-    <!-- End Weekly-News -->
-    <!-- Start Youtube -->
-
-    <div class="youtube-area video-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="video-items-active">
-                        {% for video_post in video_posts %}
-                        <div class="video-items text-center">
-                            <iframe src="{{ video_post.embed_url }}" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            <div class="video-info">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="video-caption">
-                            {% if video_posts %}
-                            <div class="top-caption">
-                                <span class="color1">{{ video_posts.first.category.name }}</span>
-                            </div>
-                            <div class="bottom-caption">
-                                <h2>{{ video_posts.first.title }}</h2>
-                                <p>{{ video_posts.first.content }}</p>
-                            </div>
-                            {% else %}
-                            <p>No videos available.</p>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="testmonial-nav text-center">
-                            {% for video_post in video_posts %}
-                            <div class="single-video">
-                                <iframe src="{{ video_post.embed_url }}" frameborder="0" allowfullscreen></iframe>
-                                <div class="video-intro">
-                                    <h4>{{ video_post.title }}</h4>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    
-    
-     
-    <!-- End Start youtube -->
-    <!--  Recent Articles start -->
-    <div class="recent-articles">
-        <div class="container">
-           <div class="recent-wrapper">
-                <!-- section Tittle -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-tittle mb-30">
-                            <h3>Sport</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="recent-active dot-style d-flex dot-style">
-                            {% for sport_post in sport_posts %}
-                            <div class="single-recent mb-100">
-                                <div class="what-img">
-                                    {% if sport_post.image %}
-                                        <img src="{{ sport_post.image.url }}" alt="{{ sport_post.title }}">
-                                    {% else %}
-                                        <img src="{% static 'assets/img/news/default.jpg' %}" alt="No image available">
-                                    {% endif %}
-                                </div>
-                                <div class="what-cap">
-                                    <span class="color1">{{ sport_post.category.name }}</span>
-                                    <h4><a href="#">{{ sport_post.title }}</a></h4>
-                                </div>
-                            </div>
+                            {% empty %}
+                                <p>Hozircha postlar yo'q</p>
                             {% endfor %}
                         </div>
                     </div>
@@ -331,25 +185,7 @@
            </div>
         </div>
     </div>
-    
-              
-    <!--Recent Articles End -->
-    <!--Start pagination -->
-   << <div class="pagination-area pb-45 text-center">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="single-wrap d-flex justify-content-center">
-                        <nav aria-label="Page navigation example">
-                            
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End pagination  -->
-    </main>
+    <!-- End Weekly-News -->
 
+</main>
 {% endblock %}
-    

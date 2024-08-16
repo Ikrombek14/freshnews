@@ -1,2 +1,5 @@
 .idea/
 venv/
+ENV/
+env/
+venv.bak/

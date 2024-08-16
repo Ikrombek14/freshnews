@@ -11,6 +11,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
 
     <!-- CSS here -->
+ 
 
 
 
@@ -31,70 +32,87 @@
 <body>
 
 <header>
+ <!-- Header Start -->
     <!-- Header Start -->
+     
+     
     <div class="header-area">
+        
+        
+        
+        
+
+
         <div class="main-header">
+            
+            
             <!-- Top Header -->
 
             <!-- Middle Header -->
+            <!-- Middle Header -->
+            <!-- Middle Header -->
             <div class="header-mid d-none d-md-block">
                 <div class="container">
-                    <div class="row d-flex align-items-center">
+                    <div class="row align-items-center">
                         <!-- Logo -->
                         <div class="col-xl-3 col-lg-3 col-md-3">
                             <div class="logo">
                                 <a href="{% url 'main' %}"><img src="{% static 'assets/img/logo/logo.png' %}" alt="Logo"></a>
                             </div>
                         </div>
-                        <div class="col-xl-9 col-lg-9 col-md-9">
+                        
+                        <!-- Banner -->
+                        <div class="col-xl-3 col-lg-3 col-md-3">
                             <div class="header-banner text-right">
-                                <img src="{% static 'assets/img/hero/header_card.jpg' %}" alt="Banner">
+                                <!-- <img src="{% static 'assets/img/hero/header_card.jpg' %}" alt="Banner"> -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
             <!-- Bottom Header -->
             <div class="header-bottom header-sticky">
                 <div class="container">
                     <div class="row align-items-center">
-                        <!-- Logo for Sticky Header -->
-                        <div class="col-xl-2 col-lg-2 col-md-4 col-6">
-                            <div class="sticky-logo">
-                                <a href="index.html"><img src="{% static 'assets/img/logo/logo.png' %}" alt="Sticky Logo"></a>
-                            </div>
-                        </div>
-                        <!-- Navigation -->
-                        <div class="col-xl-8 col-lg-8 col-md-8 col-12">
-                            <div class="main-menu d-none d-lg-block">
-                                <nav>
+                        <div class="col-xl-10 col-lg-10 col-md-12 header-flex">
+                            <!-- sticky -->
+                                <div class="sticky-logo">
+                                    <a href="index.html"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
+                                </div>
+                            <!-- Main-menu -->
+                            <div class="main-menu d-none d-md-block">
+                                <nav>                  
                                     <ul id="navigation">
-                                        
-                                        {% for category in categories %}
-                                            <li><a href="{% url 'post_by_categories' category.name %}">{{ category.name }}</a></li>
+                                        {% for category in categories %}    
+                                        <li><a href="">{{category.name}}</a></li>
                                         {% endfor %}
+                                        
+                                        
+                                        
                                     </ul>
                                 </nav>
                             </div>
-                        </div>
-                        <!-- Search Icon -->
-                        <div class="col-xl-2 col-lg-2 col-md-4 col-6">
+                        </div>             
+                        <div class="col-xl-2 col-lg-2 col-md-4">
                             <div class="header-right-btn f-right d-none d-lg-block">
                                 <i class="fas fa-search special-tag"></i>
                                 <div class="search-box">
                                     <form action="#">
                                         <input type="text" placeholder="Search">
+                                        
                                     </form>
                                 </div>
                             </div>
                         </div>
                         <!-- Mobile Menu -->
-                        <div class="col-12 d-lg-none">
-                            <div class="mobile_menu d-block"></div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-md-none"></div>
                         </div>
                     </div>
                 </div>
-            </div>
+           </div>
         </div>
     </div>
     <!-- Header End -->
@@ -193,7 +211,7 @@
             `;
         } catch (error) {
             console.error('Error fetching weather data:', error);
-            document.getElementById('weather').innerHTML = `<li>Ob-havo ma'lumotlarini olishda xatolik yuz berdi</li>`;
+            document.getElementById('weather').innerHTML = `dsds`;
         }
     }
 
