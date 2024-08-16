@@ -3,7 +3,7 @@ from .models import Categories, Post, YoutubeVideo
 from django.utils import timezone
 from django.core.paginator import Paginator
 from datetime import timedelta
-
+from django.db.models import Q
 
 
 
@@ -116,3 +116,11 @@ def post_detail(request, slug):
 
 
 
+def search(request):
+    query = request.GET.get('q')
+    results = []
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        )
+    return render(request, 'search_results.html', {'results': results, 'query': query})
