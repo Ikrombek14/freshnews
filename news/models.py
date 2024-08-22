@@ -1,8 +1,22 @@
 from django.db import models
-
 from django.urls import reverse
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+
 # Create your models here.
 
+class FieldTranslation(models.Model):
+    creator_user = models.ForeignKey(
+        User,
+        null=True,
+        default=None,
+        related_name='model_translation',
+        verbose_name=u"User translator",
+        help_text=u"User that created last translation version",
+        on_delete=models.SET_NULL  # Yangi argument
+    )
 
 
 class Categories(models.Model):
@@ -10,8 +24,6 @@ class Categories(models.Model):
 
     def __str__(self):
         return self.name
-
-
 
 
 class Post(models.Model):
@@ -23,9 +35,6 @@ class Post(models.Model):
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     video = models.FileField(upload_to='videos/', blank=True, null=True)
 
-
-    
-    
     def get_absolute_url(self):
         return reverse('post_detail',
                        args=[self.slug])
@@ -33,19 +42,20 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-import re 
+
+import re
+
+
 class YoutubeVideo(models.Model):
-    title = models.CharField(max_length=250) 
+    title = models.CharField(max_length=250)
     category = models.ForeignKey(Categories, on_delete=models.DO_NOTHING)
     content = models.TextField()
     youtube_url = models.URLField(blank=True, null=True)
     created_ad = models.DateTimeField(auto_now_add=True)
     slug = slug = models.SlugField(unique=True, max_length=255, null=False)
-    
+
     def __str__(self):
         return self.title
-    
-    
 
     @property
     def embed_url(self):
@@ -70,7 +80,3 @@ class Advertisement(models.Model):
 
     def __str__(self):
         return self.title
-
-
-
-
