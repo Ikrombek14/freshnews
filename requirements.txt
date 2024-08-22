@@ -2,7 +2,7 @@ asgiref==3.8.1
 certifi==2024.7.4
 charset-normalizer==3.3.2
 cuser==0.0.4
-Django==5.1
+Django==4.2
 django-cuser==2017.3.16
 django-modeltranslation==0.19.7
 django-tinymce==4.1.0
