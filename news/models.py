@@ -1,8 +1,9 @@
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 from django.contrib.auth import get_user_model
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 
 # Create your models here.
@@ -12,10 +13,11 @@ class FieldTranslation(models.Model):
         User,
         null=True,
         default=None,
+        on_delete=models.SET_NULL,
         related_name='model_translation',
         verbose_name=u"User translator",
         help_text=u"User that created last translation version",
-        on_delete=models.SET_NULL  # Yangi argument
+
     )
 
 
