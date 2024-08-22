@@ -1,5 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="zxx">
+ {% load i18n %}
 <head>
     {% load static %}
     <meta charset="utf-8">
@@ -11,6 +12,70 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
 
     <!-- CSS here -->
+    <style>
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: white;
+            border-bottom: 1px solid #e5e5e5;
+        }
+    
+        .weather {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            color: #333;
+        }
+    
+        .weather select {
+            margin-right: 100px; /* Tanlangan qiymatga qarab select element o'ngga suriladi */
+            font-size: 16px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+    
+        .currency-info {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+        }
+    
+        .currency-info select {
+            margin-left: 10px;
+            font-size: 16px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+    
+        .languagu-bar {
+            display: flex;
+            align-items: center;
+        }
+    
+        .languagu-bar select {
+            margin-left: 10px;
+            font-size: 16px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+    
+        .rate-up {
+            color: green;
+        }
+    </style>
+    
  
 
 
@@ -34,6 +99,60 @@
 <header>
  <!-- Header Start -->
     <!-- Header Start -->
+    <div class="header">
+        <div class="weather">
+            <select id="province" onchange="getWeather()">
+                <option value="tashkent">Тошкент</option>
+                <option value="andijan">Андижон</option>
+                <option value="bukhara">Бухоро</option>
+                <option value="fergana">Фарғона</option>
+                <option value="jizzakh">Жиззах</option>
+                <option value="kashkadarya">Қашқадарё</option>
+                <option value="khorezm">Хоразм</option>
+                <option value="namangan">Наманган</option>
+                <option value="navoi">Навоий</option>
+                <option value="samarkand">Самарқанд</option>
+                <option value="syrdarya">Сирдарё</option>
+                <option value="termez">Сурхондарё</option>
+                <option value="urgench">Қорақалпоғистон</option>
+
+            </select>
+            <ul id="weather">
+
+            </ul>
+        </div>
+    
+        <div class="currency-info">
+                                        
+            <select>
+                <option value="USD"><div>USD {{ usd_to_uzs }} </div></option>
+                <option value="EUR"><div>EUR {{ eur_to_uzs  }}</div></option>
+                <option value="RUB"><div>RUB {{ rub_to_uzs  }}</div></option>
+            </select>
+            </div>
+
+            <div class="languagu-bar">
+
+
+                        <form action="{% url 'set_language' %}" method="post" id="languageForm">{% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}">
+                            <select name="language" onchange="document.getElementById('languageForm').submit();">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% get_language_info_list for LANGUAGES as languages %}
+                                {% for language in languages %}
+                                    {% if language.code in 'uz ru en' %}
+                                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                            {{ language.code }}
+                                        </option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </form>
+
+
+            </div>
+    </div>
      
      
     <div class="header-area">
@@ -184,26 +303,26 @@
 </footer>
 
 <script>
-    async function getWeather() {
-        const apiKey = '0e7cb669bdcd4d3c9e263346240608'; // WeatherAPI kalitini bu yerga qo'ying
-        const province = document.getElementById('province').value;
+        async function getWeather() {
+            const apiKey = '0e7cb669bdcd4d3c9e263346240608'; // WeatherAPI kalitini bu yerga qo'ying
+            const province = document.getElementById('province').value;
 
-        try {
-            const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${province}&aqi=no`);
+            try {
+                const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${province}&aqi=no`);
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                document.getElementById('weather').innerHTML = `
+                    <li>${data.current.temp_c}°C</li>
+                `;
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                document.getElementById('weather').innerHTML = `<li>Ob-havo ma'lumotlarini olishda xatolik yuz berdi</li>`;
             }
-
-            const data = await response.json();
-            document.getElementById('weather').innerHTML = `
-                <li><strong>${data.location.name}</strong>: ${data.current.temp_c} °C, ${data.current.condition.text}</li>
-            `;
-        } catch (error) {
-            console.error('Error fetching weather data:', error);
-            document.getElementById('weather').innerHTML = `dsds`;
         }
-    }
 
     // Sahifa yuklanganda dastlabki ob-havo ma'lumotlarini olish
     document.addEventListener('DOMContentLoaded', getWeather);

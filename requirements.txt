@@ -2,8 +2,11 @@ asgiref==3.8.1
 certifi==2024.7.4
 charset-normalizer==3.3.2
 Django==5.1
+django-cuser==2017.3.16
+django-tinymce==4.1.0
 gunicorn==23.0.0
 idna==3.7
+modeltranslation==0.25
 packaging==24.1
 pillow==10.4.0
 requests==2.32.3
