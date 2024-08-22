@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'modeltranslation',
     'news',
-    'adminPanel',
-    'Authenticatet',
     'whitenoise.runserver_nostatic',
 
 ]
