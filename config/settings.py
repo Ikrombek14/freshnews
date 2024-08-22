@@ -109,6 +109,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# settings.py
+TRANSLATABLE_MODEL_MODULES = (
+    'news.models',  # O'z ilovangizning models fayli yo'lini qo'shing
+)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
