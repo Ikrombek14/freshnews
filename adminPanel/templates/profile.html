@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .button-group a, .button-group button {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-align: center;
+            display: inline-block;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .edit-button {
+            background-color: #004d99;
+        }
+        .edit-button:hover {
+            background-color: #003d7a;
+        }
+        .back-button {
+            background-color: #6c757d;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        .register-button {
+            background-color: #28a745;
+        }
+        .register-button:hover {
+            background-color: #218838;
+        }
+        .logout-button {
+            background-color: #dc3545;
+        }
+        .logout-button:hover {
+            background-color: #c82333;
+        }
+
+        @media (max-width: 600px) {
+            .button-group {
+                flex-direction: column;
+            }
+            .button-group a, .button-group button {
+                width: 100%;
+                box-sizing: border-box;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Profile of {{ profile.user.username }}</h1>
+        <p>Bio: {{ profile.bio }}</p>
+        <p>Location: {{ profile.location }}</p>
+        <p>Birth Date: {{ profile.birth_date }}</p>
+        <div class="button-group">
+            <a href="{% url 'update_profile' %}" class="edit-button">Edit Profile</a>
+            <a href="{% url 'home' %}" class="back-button">Back</a>
+            {% if user.is_superuser %}
+                <a href="{% url 'register_admin' %}" class="register-button">Register Admin</a>
+                <a href="{% url 'admin_list' %}" class="register-button">New Admins</a>
+            {% endif %}
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

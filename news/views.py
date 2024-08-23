@@ -7,6 +7,11 @@ from django.db.models import Q
 import requests
 
 
+
+from django.utils import timezone
+from datetime import timedelta
+from .models import Post, YoutubeVideo, Categories
+
 def main(request):
     categories = Categories.objects.all()
     all_posts = Post.objects.filter(image__isnull=False).order_by('-created_ad')[:30]
@@ -25,19 +30,17 @@ def main(request):
     latest_fantexnika_post = Post.objects.filter(category__name_uz="Fan-texnika").order_by('-created_ad').first()
     latest_madaniyat_post = Post.objects.filter(category__name_uz="Shou-biznes").order_by('-created_ad').first()
 
-    post_jamiyat = Post.objects.filter(category__name_uz='Jamiyat').order_by('-created_ad')[1]
-    post_sport = Post.objects.filter(category__name_uz='Sport').order_by('created_ad')[1]
-    post_jahon = Post.objects.filter(category__name_uz='Jahon').order_by('-created_ad')[1]
+    post_jamiyat = Post.objects.filter(category__name_uz='Jamiyat').order_by('-created_ad')[1] if Post.objects.filter(category__name_uz='Jamiyat').count() > 1 else None
+    post_sport = Post.objects.filter(category__name_uz='Sport').order_by('created_ad')[1] if Post.objects.filter(category__name_uz='Sport').count() > 1 else None
+    post_jahon = Post.objects.filter(category__name_uz='Jahon').order_by('-created_ad')[1] if Post.objects.filter(category__name_uz='Jahon').count() > 1 else None
 
     latest_post = Post.objects.latest('created_ad')
     latest_posts = Post.objects.order_by('-created_ad')[:3]  # qaynoq yangiliklar uchun 3 ta Post
     jamiyat_posts = Post.objects.filter(category__name_uz='Jamiyat').order_by('-created_ad')[:10]
-
     sport_posts = Post.objects.filter(category__name_uz='Sport').order_by('-created_ad')[:10]
 
     now = timezone.now()
     last_week = now - timedelta(days=7)
-
     weekly_top_posts = Post.objects.filter(created_ad__gte=last_week).order_by('-created_ad')[:7]
 
     video_posts = YoutubeVideo.objects.filter(youtube_url__isnull=False).order_by('-created_ad')
