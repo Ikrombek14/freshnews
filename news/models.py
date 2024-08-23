@@ -1,23 +1,20 @@
 from django.db import models
 from django.urls import reverse
+
 from django.conf import settings
-from django.contrib.auth import get_user_model
+from django.db import models
 
 User = settings.AUTH_USER_MODEL
-
-
-# Create your models here.
 
 class FieldTranslation(models.Model):
     creator_user = models.ForeignKey(
         User,
         null=True,
         default=None,
-        on_delete=models.SET_NULL,
         related_name='model_translation',
-        verbose_name=u"User translator",
-        help_text=u"User that created last translation version",
-
+        verbose_name="User translator",
+        help_text="User that created last translation version",
+        on_delete=models.SET_NULL  # or models.CASCADE, models.PROTECT, etc.
     )
 
 

@@ -1,4 +1,4 @@
-
+    
 from django.urls import path
 from .views import main, post_detail, post_by_categories, search
 urlpatterns = [
