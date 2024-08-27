@@ -14,7 +14,12 @@ class FieldTranslation(models.Model):
         related_name='model_translation',
         verbose_name="User translator",
         help_text="User that created last translation version",
+<<<<<<< HEAD
         on_delete=models.CASCADE
+=======
+        on_delete = models.DO_NOTHING
+         # or models.CASCADE, models.PROTECT, etc.
+>>>>>>> 692e7613d04f1f9e79184448e80adb7c45968e98
     )
 
 

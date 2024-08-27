@@ -12,7 +12,8 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('', include('news.urls')),
 
-)
+    path('adminPanel/', include('adminPanel.urls'),
+))
 
 
 
