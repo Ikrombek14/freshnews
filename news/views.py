@@ -12,8 +12,15 @@ from django.utils import timezone
 from datetime import timedelta
 from .models import Post, YoutubeVideo, Categories
 
+from django.utils.translation import get_language
+
 def main(request):
     categories = Categories.objects.all()
+    language = get_language()  # Foydalanuvchi tanlagan tilni aniqlash
+
+    # Tilga mos name maydonini tanlash
+    name_field = f'name_{language}'
+
     all_posts = Post.objects.filter(image__isnull=False).order_by('-created_ad')[:30]
     latest_post_with_image = next((post for post in all_posts if post.image), None)
 
@@ -21,8 +28,7 @@ def main(request):
     for category in categories:
         latest_post = Post.objects.filter(category=category).order_by('-created_ad').first()
         if latest_post:
-            latest_posts[category.name] = latest_post
-    print(latest_posts)
+            latest_posts[getattr(category, name_field)] = latest_post
 
     latest_sport_post = Post.objects.filter(category__name_uz='Sport').order_by('-created_ad').first()
     latest_jamiyat_post = Post.objects.filter(category__name_uz="Jamiyat").order_by('-created_ad').first()
@@ -71,38 +77,40 @@ def main(request):
     return render(request, 'index.html', context)
 
 
+# views.py
+from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
+from .models import Post, Categories, YoutubeVideo
+
 def post_by_categories(request, category_name):
     categories = Categories.objects.all()
-    category = get_object_or_404(Categories, name=category_name)
-    posts = Post.objects.filter(category=category)
+    category = get_object_or_404(Categories, name_uz=category_name)
+    posts = Post.objects.filter(category=category).order_by('-created_ad')
     paginator = Paginator(posts, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     context = {
         'categories': categories,
-
-        'page_obj': page_obj
+        'category': category,  # Qo‘shimcha kategoriya ma'lumotini uzatamiz
+        'page_obj': page_obj,
     }
     return render(request, 'category.html', context=context)
 
-
 def post_detail(request, slug):
     categories = Categories.objects.all()
-
     youtube_videos = YoutubeVideo.objects.all().order_by('-created_ad')[:5]
     post = get_object_or_404(Post, slug=slug)
-
     related_posts = Post.objects.filter(category=post.category).exclude(id=post.id)[:5]
 
     context = {
         'post': post,
         'categories': categories,
-
         'related_posts': related_posts,
-        'youtube_videos': youtube_videos
+        'youtube_videos': youtube_videos,
     }
     return render(request, 'details.html', context=context)
+
 
 
 def search(request):

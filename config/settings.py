@@ -1,5 +1,7 @@
 from pathlib import Path
 import os
+from django.utils.translation import gettext_lazy as _
+
 
 # Bazaviy fayl yo'lini olish
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,7 +17,6 @@ ALLOWED_HOSTS = ['*']
 
 # Ilovalar ro'yxati
 INSTALLED_APPS = [
-    'parler',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -25,7 +26,6 @@ INSTALLED_APPS = [
     'cuser',
     'news',
     'whitenoise.runserver_nostatic',
-    'modeltranslation',
 ]
 
 # O'rta qatlamlar (Middlewares)
@@ -40,6 +40,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'cuser.middleware.CuserMiddleware',
+
 ]
 
 # Statik fayllar uchun saqlash usuli
@@ -93,18 +94,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Model translatsiya qilish uchun modullar
-PARLER_LANGUAGES = {
-    None: [
-        {'code': 'uz'},
-        {'code': 'en'},
-        {'code': 'ru'},
-    ],
-    'default': {
-        'fallback': 'uz',
-        'hide_untranslated': False,
-    }
-}
+
+LANGUAGES = [
+    ('en', _('English')),
+    ('uz', _('Uzbek')),
+    ('ru', _('Russian')),
+    # boshqa tillar
+]
+
+
 
 # Tarjima fayllari yo'llari
 LOCALE_PATHS = [

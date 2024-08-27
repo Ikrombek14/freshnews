@@ -131,27 +131,33 @@
             </select>
             </div>
 
-            <div class="languagu-bar">
 
-
-                        <form action="{% url 'set_language' %}" method="post" id="languageForm">{% csrf_token %}
-                            <input name="next" type="hidden" value="{{ redirect_to }}">
-                            <select name="language" onchange="document.getElementById('languageForm').submit();">
-                                {% get_current_language as LANGUAGE_CODE %}
-                                {% get_available_languages as LANGUAGES %}
-                                {% get_language_info_list for LANGUAGES as languages %}
-                                {% for language in languages %}
-                                    {% if language.code in 'uz ru en' %}
-                                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                                            {{ language.code }}
-                                        </option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        </form>
-
-
+        <div class="language-bar">
+                <form action="{% url 'set_language' %}" method="post" id="languageForm">{% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <select name="language" onchange="document.getElementById('languageForm').submit();">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            {% if language.code in 'uz ru en' %}
+                                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                    {{ language.code }}
+                                </option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </form>
             </div>
+
+            <div class="content">
+                <h1>{{ translated_title }}</h1>
+                <p>{{ translated_content }}</p>
+            </div>
+
+
+
+
     </div>
      
      
@@ -204,9 +210,15 @@
                             <div class="main-menu d-none d-md-block">
                                 <nav>                  
                                     <ul id="navigation">
-                                        {% for category in categories %}    
-                                        <li><a href="{% url 'post_by_categories' category.name %}">{{category.name}}</a></li>
+                                        {% for category in categories %}
+                                            {% if category.name_uz %}
+                                                <li><a href="{% url 'post_by_categories' category.name_uz %}">{{ category.name_uz }}</a></li>
+                                            {% else %}
+                                                <li>No category name available</li>
+                                            {% endif %}
                                         {% endfor %}
+
+
                                         
                                         
                                         

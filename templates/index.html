@@ -24,7 +24,7 @@
                                 
                                     {% for post in latest_posts %}
                                     {% if post %}
-                                        <li class="news-item">{{ post.title }}</li>
+                                        <li class="news-item">{{ post.title_uz}}</li>
                                     {% endif %}
                                     {% endfor %}
 
@@ -47,9 +47,9 @@
                                 {% endif %}
 
                                 <div class="trend-top-cap">
-                                    <span>{{ latest_post_with_image.category.name }}</span>
+                                    <span>{{ latest_post_with_image.category.name_uz }}</span>
                                     <h2>
-                                        <a href="{% url 'post_detail' latest_post_with_image.slug %}">{{ latest_post_with_image.title }}</a>
+                                        <a href="{% url 'post_detail' latest_post_with_image.slug %}">{{ latest_post_with_image.title_uz }}</a>
                                     </h2>
                                 </div>
                             </div>
@@ -69,8 +69,8 @@
                                         </div>
                         
                                         <div class="trend-bottom-cap">
-                                            <span class="color1">{{ all_post.category.name }}</span>
-                                            <h4><a href="{% url 'post_detail' all_post.slug %}">{{ all_post.title }}</a></h4>
+                                            <span class="color1">{{ all_post.category.name_uz }}</span>
+                                            <h4><a href="{% url 'post_detail' all_post.slug %}">{{ all_post.title_uz }}</a></h4>
                                         </div>
                                     </div>
                                 </div>
@@ -91,9 +91,9 @@
                             </div>
 
                             <div class="trand-right-cap">
-                                <span class="color3">{{latest_jamiyat_post.category.name}}</span>
+                                <span class="color3">{{latest_jamiyat_post.category.name_uz}}</span>
                                 <h4>
-                                    <a href="{% url 'post_detail' latest_jamiyat_post.slug %}">{{ latest_jamiyat_post.title }}</a>
+                                    <a href="{% url 'post_detail' latest_jamiyat_post.slug %}">{{ latest_jamiyat_post.title_uz }}</a>
                                 </h4>
                             </div>
                         </div>
@@ -106,9 +106,9 @@
                                 {% endif %}
                             </div>
                             <div class="trand-right-cap">
-                                <span class="color1">{{ latest_sport_post.category.name }}</span>
+                                <span class="color1">{{ latest_sport_post.category.name_uz }}</span>
                                 <h4>
-                                    <a href="{% url 'post_detail' latest_sport_post.slug %}">{{ latest_sport_post.title }}</a>
+                                    <a href="{% url 'post_detail' latest_sport_post.slug %}">{{ latest_sport_post.title_uz }}</a>
                                     
                                 </h4>
                             </div>
@@ -122,8 +122,8 @@
                             </div>
 
                             <div class="trand-right-cap">
-                                <span class="color2">{{ latest_jahon_post.category.name}}</span>
-                                <a href="{% url 'post_detail' latest_jahon_post.slug %}">{{ latest_jahon_post.title }}</a>>
+                                <span class="color2">{{ latest_jahon_post.category.name_uz}}</span>
+                                <a href="{% url 'post_detail' latest_jahon_post.slug %}">{{ latest_jahon_post.title_uz }}</a>>
                             </div>
                         </div> 
                         <div class="trand-right-single d-flex">
@@ -135,8 +135,8 @@
 
 
                             <div class="trand-right-cap">
-                                <span class="color4">{{latest_fantexnika_post.category.name}}</span>
-                                <h4><a href="{% url 'post_detail' latest_fantexnika_post.slug %}">{{latest_fantexnika_post.title}}</a></h4>
+                                <span class="color4">{{latest_fantexnika_post.category.name_uz}}</span>
+                                <h4><a href="{% url 'post_detail' latest_fantexnika_post.slug %}">{{latest_fantexnika_post.title_uz}}</a></h4>
                             </div>
                         </div>
                         <div class="trand-right-single d-flex">
@@ -147,8 +147,8 @@
                             </div>
 
                             <div class="trand-right-cap">
-                                <span class="color1">{{latest_madaniyat_post.category.name}}</span>
-                                <h4><a href="{% url 'post_detail' latest_madaniyat_post.slug %}">{{latest_madaniyat_post.title}}</a></h4>
+                                <span class="color1">{{latest_madaniyat_post.category.name_uz}}</span>
+                                <h4><a href="{% url 'post_detail' latest_madaniyat_post.slug %}">{{latest_madaniyat_post.title_uz}}</a></h4>
                             </div>
                         </div>
 
@@ -183,9 +183,9 @@
                                 </div>
 
                                 <div class="weekly-caption">
-                                    <span class="color1">{{ jamiyat_post.category.name }}</span>
+                                    <span class="color1">{{ jamiyat_post.category.name_uz }}</span>
                                     <h4>
-                                        <a href="{% url 'post_detail' jamiyat_post.slug %}">{{ jamiyat_post.title }}</a>
+                                        <a href="{% url 'post_detail' jamiyat_post.slug %}">{{ jamiyat_post.title_uz }}</a>
                                     </h4>
                                 </div>
                             </div>
