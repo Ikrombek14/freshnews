@@ -1,10 +1,8 @@
 from django.contrib import admin
-from .models import Categories, Post, Advertisement, YoutubeVideo, FieldTranslation
+from .models import Categories, Post, Advertisement, YoutubeVideo
 
 admin.site.register(Categories)
-@admin.register(FieldTranslation)
-class FieldTranslationAdmin(admin.ModelAdmin):
-    list_display = ('creator_user',)  # Qanday maydonlarni ko'rsatish kerakligi
+
 @admin.register(YoutubeVideo)
 class YoutubeVideo(admin.ModelAdmin):
     list_display = ('title', 'category', 'created_ad', 'slug')

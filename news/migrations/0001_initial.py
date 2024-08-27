@@ -71,17 +71,8 @@ class Migration(migrations.Migration):
             name='FieldTranslation',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('creator_user', models.ForeignKey(on_delete=models.SET_NULL,default=None, help_text='User that created last translation version', null=True, related_name='model_translation', to=settings.AUTH_USER_MODEL, verbose_name='User translator')),
             ],
         ),
     ]
-    ('creator_user', models.ForeignKey(
-        related_name='model_translation',
-        default=None,
-        to=settings.AUTH_USER_MODEL,
-        help_text='Usuario que ha realizado la última traducción',
-        null=True,
-        verbose_name='Usuario que ha realizado la traducción',
-        on_delete=models.SET_NULL,
-    )),
+
 
