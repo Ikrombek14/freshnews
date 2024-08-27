@@ -9,10 +9,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-opz@qu0!$q1isl%otg!exxkcpf(x=m#id%3*7s%ijc-(*8c2up'
 
 # Debug holati (Uni ishlab chiqarish uchun o'chiring)
-DEBUG = True
+DEBUG = False
 
 # Ruxsat etilgan xostlar ro'yxati
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 # Ilovalar ro'yxati
 INSTALLED_APPS = [
