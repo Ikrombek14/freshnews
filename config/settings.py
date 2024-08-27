@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'cuser',
     'news',
     'whitenoise.runserver_nostatic',
+    'modeltranslation',
 ]
 
 # O'rta qatlamlar (Middlewares)
