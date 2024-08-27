@@ -6,7 +6,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('adminpanel/', include('adminpanel.urls')),
+
+    #path('adminpanel1/', include('adminpanel.urls')),
 
 
 ] + i18n_patterns(
@@ -14,7 +15,6 @@ urlpatterns = [
     path('', include('news.urls')),
 
 )
-
 
 
 
