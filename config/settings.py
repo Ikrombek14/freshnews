@@ -11,7 +11,7 @@ SECRET_KEY = 'django-insecure-opz@qu0!$q1isl%otg!exxkcpf(x=m#id%3*7s%ijc-(*8c2up
 DEBUG = True
 
 # Ruxsat etilgan xostlar ro'yxati
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Ilovalar ro'yxati
 INSTALLED_APPS = [
