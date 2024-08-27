@@ -1,9 +1,17 @@
-from django.urls import reverse
+from dataclasses import Field
 
-from django.conf import settings
+from django.urls import reverse
+# models.py in your Django app
+
 from django.db import models
 
+class Field(models.Model):
+    name = models.CharField(max_length=100)
 
+class FieldTranslation(models.Model):
+    field = models.ForeignKey(Field, on_delete=models.CASCADE)
+    locale = models.CharField(max_length=10)
+    value = models.CharField(max_length=255)
 
 
 
