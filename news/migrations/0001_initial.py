@@ -71,7 +71,7 @@ class Migration(migrations.Migration):
             name='FieldTranslation',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('creator_user', models.ForeignKey(default=None, help_text='User that created last translation version', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='model_translation', to=settings.AUTH_USER_MODEL, verbose_name='User translator')),
+                ('creator_user', models.ForeignKey(default=None, help_text='User that created last translation version', null=True, on_delete=models.CASCADE, related_name='model_translation', to=settings.AUTH_USER_MODEL, verbose_name='User translator')),
             ],
         ),
     ]
@@ -82,6 +82,6 @@ class Migration(migrations.Migration):
         help_text='Usuario que ha realizado la última traducción',
         null=True,
         verbose_name='Usuario que ha realizado la traducción',
-        on_delete=models.SET_NULL  # Yangi qo'shilgan qator
+        on_delete=models.CASCADE
     )),
 
