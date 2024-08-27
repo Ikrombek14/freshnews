@@ -9,12 +9,12 @@ User = settings.AUTH_USER_MODEL
 class FieldTranslation(models.Model):
     creator_user = models.ForeignKey(
         User,
+        on_delete=models.SET_NULL,
         null=True,
         default=None,
         related_name='model_translation',
         verbose_name="User translator",
-        help_text="User that created last translation version",
-        on_delete=models.CASCADE
+        help_text="User that created last translation version"
 
     )
 
