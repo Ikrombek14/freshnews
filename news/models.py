@@ -6,14 +6,15 @@ from django.db import models
 from parler.models import TranslatableModel, TranslatedFields
 
 
-class Field(models.Model):
-    name = models.CharField(max_length=255)
     # boshqa maydonlar
-class FieldTranslation(TranslatableModel):
-    field = models.ForeignKey(Field, on_delete=models.CASCADE)
+from parler.models import TranslatableModel, TranslatedFields
+
+class Field(TranslatableModel):
+    name = models.CharField(max_length=255)
     translations = TranslatedFields(
         value=models.CharField(max_length=255)
     )
+
 
 
 
