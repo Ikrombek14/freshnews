@@ -122,3 +122,8 @@ MEDIA_ROOT = BASE_DIR.joinpath('media')
 
 # Default asosiy kalit turi
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+TRANSLATABLE_MODEL_MODULES = (
+    'news.models',
+)
