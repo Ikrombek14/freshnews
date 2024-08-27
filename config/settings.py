@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cuser',
     'news',
+    'freshnews_admin',
+
     'whitenoise.runserver_nostatic',
 
 ]
@@ -157,6 +159,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 AUTH_USER_MODEL = 'auth.User'
+
+
+ROOT_URLCONF = 'config.urls'
 
 
 MEDIA_URL = '/media/'
