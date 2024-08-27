@@ -1,6 +1,5 @@
 from pathlib import Path
 import os
-from django.utils.translation import gettext_lazy as _
 
 # Bazaviy fayl yo'lini olish
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,7 +15,7 @@ ALLOWED_HOSTS = []
 
 # Ilovalar ro'yxati
 INSTALLED_APPS = [
-    'modeltranslation',
+    'parler',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -25,8 +24,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cuser',
     'news',
-
-
     'whitenoise.runserver_nostatic',
 ]
 
@@ -96,25 +93,17 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Model translatsiya qilish uchun modullar
-TRANSLATABLE_MODEL_MODULES = (
-    'news.models',
-)
-
-# Til konfiguratsiyasi
-LANGUAGE_CODE = 'uz'  # Default til
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
-
-# Dastur til konfiguratsiyasi
-LANGUAGES = [
-    ('uz', _('Uzb')),
-    ('en', _('Eng')),
-    ('ru', _('Рус')),
-]
-
-# Standart model translatsiya tili
-MODEL_TRANSLATION_DEFAULT_LANGUAGE = 'uz'
+PARLER_LANGUAGES = {
+    None: [
+        {'code': 'uz'},
+        {'code': 'en'},
+        {'code': 'ru'},
+    ],
+    'default': {
+        'fallback': 'uz',
+        'hide_untranslated': False,
+    }
+}
 
 # Tarjima fayllari yo'llari
 LOCALE_PATHS = [
@@ -125,8 +114,6 @@ LOCALE_PATHS = [
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-
 
 # Media fayllar uchun konfiguratsiya
 MEDIA_URL = '/media/'

@@ -1,6 +1,14 @@
-    
+from django.http import HttpResponseRedirect
 from django.urls import path
+
+from . import translation
 from .views import main, post_detail, post_by_categories, search
+from django.utils.translation import activate
+
+def set_language(request, lang_code):
+    activate(lang_code)
+    request.session[translation.LANGUAGE_SESSION_KEY] = lang_code
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 urlpatterns = [
     
     path('', main, name="main"),
